@@ -1,27 +1,36 @@
 package util;
 
 public class Point {
-    private int x, y;
+    private double x;
+    private double y;
 
-    public Point() {
-        this(0, 0);
-    }
-
-    public Point(int x, int y) {
+    public Point(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
-    public void translate(int dx, int dy) {
-        x += dx;
-        y += dy;
+    public double getX() {
+        return this.x;
     }
 
-    public int getX() {
-        return x;
+    public double getY() {
+        return this.y;
     }
 
-    public int getY() {
-        return y;
+    public Point add(Point p) {
+        return new Point(this.x + p.getX(), this.y + p.getY());
+    }
+
+    public Point minus(Point p) {
+        return new Point(this.x - p.getX(), this.y - p.getY());
+    }
+
+    public Point times(double x) {
+        return new Point(this.x * x, this.y * x);
+    }
+
+    @Override
+    public Object clone() {
+        return new Point(this.x, this.y);
     }
 }

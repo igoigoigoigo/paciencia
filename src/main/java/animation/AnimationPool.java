@@ -1,17 +1,29 @@
 package animation;
 
-import java.util.LinkedList;
 import java.util.List;
+import java.util.ArrayList;
+
+import animation.Animation;
 
 public class AnimationPool {
-    private final List<Animation> animations = new LinkedList<>();
+    private List<Animation> animations;
+
+    public AnimationPool() {
+        this.animations = new ArrayList<>();
+    }
+
+    public void update(double elapsed) {
+        for (int i = 0; i < animations.size(); i++) {
+            this.animations.get(i).update(elapsed);
+
+            if (animations.get(i).ended())
+                this.animations.remove(animations.get(i));
+        }
+    }
 
     public void add(Animation animation) {
-        animations.add(animation);
-    }
-
-    public void update() {
-        animations.removeIf(Animation::isOver);
-        animations.forEach(Animation::update);
+        this.animations.add(animation);
     }
 }
+
+/*GitHub@IsaRosseto*/

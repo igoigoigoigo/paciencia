@@ -1,36 +1,62 @@
 package stack;
 
+import java.util.List;
+import java.util.Stack;
+import javafx.scene.canvas.GraphicsContext;
+
 import game.Card;
+import stack.Hand;
 import util.Point;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class CardStack {
-    protected final List<Card> cards = new ArrayList<>();
-    protected final Point position;
+    public static final double DefaultCardsMargin = 20.0f;
+    public static final double MaxStackHeight = 280.0;
 
-    public CardStack(Point position) {
-        this.position = position;
+    protected Stack<Card> cards;
+
+    public CardStack() {
+        cards = new Stack<>();
     }
 
-    public abstract boolean canAdd(Card card);
-
-    public void addCard(Card card) {
-        if (canAdd(card)) {
-            cards.add(card);
-        }
+    public void add(Card card) {
+        this.cards.add(card);
     }
 
-    public boolean isEmpty() {
-        return cards.isEmpty();
+    public Card peek() {
+        return this.cards.peek();
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public Card pop() {
+        return this.cards.pop();
     }
 
-    public Point getPosition() {
-        return position;
+    public void drop(Hand hand) {
+        for (Card card : hand.getCards())
+            this.add(card);
     }
+
+    public void remove(Hand hand) {
+        List<Card> handCards = hand.getCards();
+
+        for (Card card : handCards)
+            this.cards.remove(card);
+    }
+
+    public int size() {
+        return this.cards.size();
+    }
+
+    public Hand pick(Point p) {
+        return new Hand();
+    }
+
+    public boolean isValidTop(Hand hand) {
+        return false;
+    }
+
+    public abstract Point getTopPosition();
+
+    public abstract boolean isOver(Point p);
+
+    public abstract void draw(GraphicsContext ctx);
 }

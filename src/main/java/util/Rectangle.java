@@ -1,17 +1,31 @@
 package util;
 
 public class Rectangle {
-    private final int x, y, width, height;
+    private double left;
+    private double top;
+    private double width;
+    private double height;
 
-    public Rectangle(int x, int y, int width, int height) {
-        this.x = x;
-        this.y = y;
+    public Rectangle(double left, double top, double width, double height) {
+        this.left = left;
+        this.top = top;
         this.width = width;
         this.height = height;
     }
 
-    public boolean contains(Point p) {
-        return p.getX() >= x && p.getX() <= x + width &&
-                p.getY() >= y && p.getY() <= y + height;
+    public double getLeft() {
+        return this.left;
+    }
+
+    public double getTop() {
+        return this.top;
+    }
+
+    public double getWidth() {
+        return this.width;
+    }
+
+    public double getHeight() {
+        return this.height;
     }
 }

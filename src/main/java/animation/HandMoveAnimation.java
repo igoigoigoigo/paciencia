@@ -1,27 +1,42 @@
 package animation;
 
+import animation.Animation;
+import util.Point;
 import stack.Hand;
 
 public class HandMoveAnimation implements Animation {
-    private final Hand hand;
-    private final int dx, dy;
-    private int steps;
+    private Hand hand;
 
-    public HandMoveAnimation(Hand hand, int dx, int dy) {
+    private boolean animEnded;
+    private Point initialPosition;
+    private Point targetPosition;
+    private double elapsedTime;
+    private double totalTime;
+
+    public HandMoveAnimation(Hand hand, Point target, double time) {
         this.hand = hand;
-        this.dx = dx / 10;
-        this.dy = dy / 10;
-        this.steps = 10;
+
+        this.initialPosition = this.hand.getPosition();
+        this.targetPosition = target;
+        this.totalTime = time;
     }
 
-    @Override
-    public void update() {
-        hand.move(dx, dy);
-        steps--;
+    public void update(double elapsed) {
+        this.elapsedTime += elapsed;
+        double factor = this.elapsedTime / this.totalTime;
+
+        if (factor >= 1) {
+            this.hand.setPosition(this.targetPosition);
+            this.animEnded = true;
+        } else {
+            this.hand.setPosition(
+                    this.initialPosition.add(this.targetPosition.minus(this.initialPosition).times(factor)));
+        }
     }
 
-    @Override
-    public boolean isOver() {
-        return steps <= 0;
+    public boolean ended() {
+        return this.animEnded;
     }
 }
+
+/*GitHub@IsaRosseto*/

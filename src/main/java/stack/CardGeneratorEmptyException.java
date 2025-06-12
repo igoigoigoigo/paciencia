@@ -1,7 +1,8 @@
 package stack;
 
-public class CardGeneratorEmptyException extends RuntimeException {
-    public CardGeneratorEmptyException() {
-        super("Não há mais cartas para gerar.");
+public class CardGeneratorEmptyException extends Exception {
+
+    public CardGeneratorEmptyException(String message) {
+        super(message);
     }
 }
